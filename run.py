@@ -16,6 +16,8 @@ book_url = "http://www.zxcs.me/post/"
 title_string = ""
 author_string = ""
 
+no_cover = False
+
 def downloader(url, path):
     start = time.time()
     size = 0
@@ -98,7 +100,11 @@ def download_pic(pic_url):
 
 
 print("开始下载封面图片.....")
-download_pic(pic_url)
+try:
+    download_pic(pic_url)
+except:
+    print("!! 下载封面失败...")
+    no_cover = True
 print("开始下载书籍压缩文件.....")
 download_book(dl_url)
 
@@ -147,7 +153,10 @@ f.close
     
 
 print("开始转换EPUB文件........")
-os.system('pandoc "%s" -o "%s" -t epub3 --css=epub.css --epub-cover-image="%s"' % (txtname, epubname, jpgname))
+if no_cover:
+    os.system('pandoc "%s" -o "%s" -t epub3 --css=epub.css' % (txtname, epubname))
+else:
+    os.system('pandoc "%s" -o "%s" -t epub3 --css=epub.css --epub-cover-image="%s"' % (txtname, epubname, jpgname))
 print("开始转换KEPUB文件.........")
 os.system('kepubify -i "%s"' % (epubname))
 print("删除残留文件......")

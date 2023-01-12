@@ -2,7 +2,7 @@
 A comprehensive download conversion management script set for http://www.zxcs.me/
 
 ## Prerequisite
-1. Python3 environment with `beautifulsoup4` `patoolib` `requests` installed
+1. Python3 environment with `beautifulsoup4` `patool` `requests` `filetype` `lxml` installed
 2. `pandoc` `unrar` installed in system path. if you are using Kobo Ereader, `kepubify` is needed.
 
 ## Useage
