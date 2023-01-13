@@ -7,14 +7,14 @@ body {
     margin-right: 1%;
     line-height: 1em;
     text-align: justify;
-    font-family: "Times New Roman","方正书宋","宋体","明体","zw",sans-serif;
+    font-family: "Times New Roman","霞鶩文楷等寬 TC","方正书宋","宋体","明体","zw",sans-serif;
  }
 code { font-family: monospace; }
 h1 {
     margin: 1em 0 5em;
     line-height: 120%;
     text-align: left;
-    font-family: "微软雅黑","黑体","ht","zw","文鼎UD晶熙黑體","Noto Serif",sans-serif;
+    font-family: "霞鶩文楷等寬 TC","微软雅黑","黑体","ht","zw","文鼎UD晶熙黑體","Noto Serif",sans-serif;
     padding: 15px 12px 1em 5px;
     border-style: none none dotted none;
     border-width: 0px 0px 1px 0px;

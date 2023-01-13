@@ -97,6 +97,14 @@ def download_pic(pic_url):
         url = soup.find("img", alt=title).get("src")
     downloader(url=url, path=path)
 
+def createConvert(title):
+    title_with_sp = " ".join(list(title)) 
+    font_width = len(title_with_sp) * 63
+    x = 280 - (font_width / 2)
+    y = 348 
+    cmd = """convert -font "霞鶩文楷等寬-TC-Light" -pointsize 70 -draw "text %d,%d '%s'" cover.jpg output.jpg""" % (x, y, title_with_sp)
+    print(">> %s\n" % cmd)
+    os.system(cmd)
 
 
 print("开始下载封面图片.....")
@@ -105,11 +113,14 @@ try:
 except:
     print("!! 下载封面失败...")
     no_cover = True
+    print("自己合成封面...")
+    createConvert(title_string)
+
 print("开始下载书籍压缩文件.....")
 download_book(dl_url)
 
 rarname = filename + ".rar"
-jpgname = filename + ".jpg"
+jpgname = "output.jpg" if no_cover else filename + ".jpg"
 txtname = filename + ".txt"
 epubname = title_string + "-" + author_string + ".epub"
 print("正在解压缩文件到当前目录......")
@@ -140,7 +151,7 @@ for line in lines:
     if line == "内容简介：":
         new_content.append("# " + line + "\n")
         continue
-    if re.match(r'^\s*[第卷][0123456789一二三四五六七八九十零〇百千两]*[章回部节集卷].*',line):
+    if re.match(r'^\s*([第序][0123456789一二三四五六七八九十零〇百千两]*[章回部节集卷]|卷[0123456789一二三四五六七八九十零〇百千两]*).*',line):
         new_content.append("# " + line + "\n")
         continue
     line = line.replace("　　","")
@@ -153,12 +164,11 @@ f.close
     
 
 print("开始转换EPUB文件........")
-if no_cover:
-    os.system('pandoc "%s" -o "%s" -t epub3 --css=epub.css' % (txtname, epubname))
-else:
-    os.system('pandoc "%s" -o "%s" -t epub3 --css=epub.css --epub-cover-image="%s"' % (txtname, epubname, jpgname))
+os.system('pandoc "%s" -o "%s" -t epub3 --css=epub.css --epub-cover-image="%s"' % (txtname, epubname, jpgname))
+
 print("开始转换KEPUB文件.........")
 os.system('kepubify -i "%s"' % (epubname))
+
 print("删除残留文件......")
 os.system("rm '%s'" % (txtname))
 os.system("rm '%s'" % (jpgname))
