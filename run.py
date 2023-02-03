@@ -151,7 +151,7 @@ for line in lines:
     if line == "内容简介：":
         new_content.append("# " + line + "\n")
         continue
-    if re.match(r'^\s*([第序][0123456789一二三四五六七八九十零〇百千两]*[章回部节集卷]|卷[0123456789一二三四五六七八九十零〇百千两]*).*',line):
+    if re.match(r'^\s*([第序][0123456789一二三四五六七八九十零〇百千两]*[章回部节集卷]|卷[0123456789一二三四五六七八九十零〇百千两]).*',line):
         new_content.append("# " + line + "\n")
         continue
     line = line.replace("　　","")
